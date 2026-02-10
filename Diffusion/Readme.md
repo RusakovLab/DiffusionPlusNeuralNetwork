@@ -1,48 +1,3 @@
-# Nature Neuroscience Submission 
-
-
-# Hopfield Network Simulation Figures
-
-This directory contains simulation output figures used in the manuscript and supplementary materials.  
-The files represent results from two related implementations of Hopfield-type networks:
-
-1. **LIF Hopfield Network** – a biologically grounded implementation using leaky integrate-and-fire neurons.
-2. **Generalized Hopfield Network** – a newer model version that achieves the same recall performance but with simplified/abstracted neuron dynamics.
-
----
-
-## File Descriptions
-
-| Filename | Model Version | Description | Usage in Paper |
-|---------|---------------|-------------|----------------|
-| **Fig4_Hopfield_LIF_Sparse.m** | LIF Hopfield (manuscript version) | **Figure 4**: *Memory recall performance in a sparse associative network implemented with leaky integrate-and-fire (LIF) neurons.* | **Used in main manuscript** |
-| **Fig_Sup_Hopfield_LIF.m** | LIF Hopfield (updated implementation) | Updated implementation of the LIF Hopfield network. Confirms that the results of the manuscript version are reproducible using the updated model code. | **Not included in paper; supplementary validation** |
-| **Fig_Sup_Hopfield_GeneralizedNetwork.m** | Generalized Hopfield Network (manuscript version) | **Supplementary Figure**: *Comparison of recall stability in the generalized Hopfield network and the LIF-based Hopfield network, demonstrating equivalence of attractor retrieval dynamics across model formulations.* | **Used in supplementary materials** |
-
----
-
-## Purpose of Having Two Versions
-
-- The **manuscript version** ensures complete **traceability and reproducibility** of the published results.
-- The **updated implementation** demonstrates that:
-  - The results are **robust across model architectures**
-  - Recall phenomena are **not dependent on the numerical details of neuron dynamics**
-  - The main findings **generalize** between spiking and abstract Hopfield formulations
-
-This supports the interpretation that **stable attractor recall is an inherent network property**, not an artifact of the specific neuron model.
-
----
-
-## Usage Notes
-
-- To regenerate figures for the manuscript:  
-  **use `Fig4_Hopfield_LIF_Sparse.m` and `Fig_Sup_Hopfield_GeneralizedNetwork.m`.**
-
-- To extend or modify the models for new simulations or integration into larger frameworks:  
-  **use `Fig_Sup_Hopfield_LIF.m`.**
-
----
-
 # Monte-Carlo Simulation of Glutamate Diffusion and Astroglial Uptake (SpaceSR Model)
 
 This repository contains MATLAB code implementing a 3D Monte-Carlo model of synaptic glutamate diffusion, extracellular tortuosity, and astrocyte-mediated glutamate uptake via surface binding. The model follows the overlapping-spherical neuropil representation commonly used in quantitative ultrastructural reconstructions of neocortical layer 1.
@@ -117,6 +72,8 @@ Please contact the authors for permission before commercial or derivative redist
 
 Contact
 
-Prof Dmitri Rusakov
-Dr Leonid  Savtchenko
+Leonid  Savtchenko
 Computation Neuroscience, University College London
+Email: savtchenko@yahoo.com
+
+

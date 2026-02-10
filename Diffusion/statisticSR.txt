@@ -1,0 +1,34 @@
+%------------------------------------------------------------
+% Simulation Parameter File (statisticSR.txt)
+% Used by InputParametersSR.m
+% Units:
+%   Length = nanometers (nm)
+%   Time   = milliseconds (ms)
+%------------------------------------------------------------
+
+np                      = 2000           % Number of glutamate particles released
+Trials                  = 10              % Number of independent simulation runs
+
+% Astroglial binding parameters
+MaxProbAdhesive         = 1.0            % Maximum binding probability to astroglial surface (1 = always binds when conditions met)
+TimeINsideAdhesiveZone  = 0.1            % Time constant (ms) controlling binding probability growth upon contact
+
+% Tissue composition
+ProbabilityofAstrocytes = 0.10           % Fraction of spheres representing astrocytic processes
+Numbersphere            = 1512           % Total number of spheres used to generate neuropil structure volume fraction
+
+% Transport / uptake behavior
+UnboundProb             = 0.0            % Probability for a particle to remain permanently unbound (0 = always potentially bindable)
+
+%------------------------------------------------------------
+% Notes:
+%   - Astrocyte coverage and geometry follow overlapping-sphere neuropil model.
+%   - UnboundProb = 0 ensures all molecules may bind when encountering astroglial surfaces.
+%   - ProbabilityofAstrocytes defines astrocyte-to-neuronal structural representation ratio.
+%   - MaxProbAdhesive and TimeINsideAdhesiveZone jointly determine uptake saturation timescale.
+%------------------------------------------------------------
+
+   % 0.2	1400 26 January 2023
+   % 0.3	1120
+   % 0.4	850
+   % 0.5	600
