@@ -1,7 +1,7 @@
 # Neurotransmitter Spillover Shapes Network Computation: Monte-Carlo Diffusion and Hopfield Attractor Simulations
 
 Leonid Savtchenko & Dmitri Rusakov  
-Computational Neuroscience, University College London
+Institute of Neurology, University College London
 
 ---
 
@@ -195,4 +195,4 @@ This code is provided for research reproducibility. Please contact the authors b
 
 Prof Dmitri Rusakov — University College London  
 Dr Leonid Savtchenko — University College London  
-Computational Neuroscience Group, UCL
+Institute of Neurology, UCL
