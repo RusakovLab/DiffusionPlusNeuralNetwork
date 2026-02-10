@@ -1,15 +1,13 @@
 # Neurotransmitter Spillover Shapes Network Computation: Monte-Carlo Diffusion and Hopfield Attractor Simulations
 
-**Submission to *Nature Neuroscience***
-
 Leonid Savtchenko & Dmitri Rusakov  
-Institute of Neurology, University College London
+Computational Neuroscience, University College London
 
 ---
 
 ## Overview
 
-This repository contains the simulation code accompanying our manuscript. The work addresses two interconnected questions:
+This repository contains simulation code for the accompanying manuscript. The work addresses two interconnected questions:
 
 1. **How does glutamate escape the synaptic cleft and interact with perisynaptic astroglia?** — modelled via 3D Monte-Carlo particle diffusion through a realistic neuropil geometry.
 2. **How does neurotransmitter spillover affect associative memory recall?** — modelled via Hopfield-type attractor networks augmented with a spatially graded "spillover" lateral field.
@@ -21,17 +19,16 @@ All simulations are implemented in MATLAB (R2018b or later).
 ## Repository Structure
 
 ```
-NatNeurosciSub/
 ├── Diffusion/                    # Monte-Carlo glutamate diffusion model
-│   ├── Fig4SAN2000Psi01A01.m     # Main simulation script
+│   ├── Fig_SAN2000Psi01A01.m     # Main simulation script
 │   ├── InputParametersSR.m       # Parameter loader (reads statisticSR.txt)
 │   ├── NMDA_SpaceSR_New.m        # NMDA receptor occupancy analysis
 │   └── statisticSR.txt           # User-editable configuration file
 │
 ├── NetworkCode/                  # Hopfield attractor network models
-│   ├── Fig4_Hopfield_LIF_Sparse.m              # [Figure 4] LIF spiking Hopfield network
-│   ├── Fig_Sup_Hopfield_GeneralizedNetwork.m   # [Suppl. Figure] Generalised Hopfield network
-│   └── Fig_Sup_Hopfield_LIF.m                  # Supplementary LIF validation model
+│   ├── Fig_Hopfield_LIF_Sparse.m              # LIF spiking Hopfield network
+│   ├── Fig_Sup_Hopfield_GeneralizedNetwork.m   # Generalised Hopfield network
+│   └── Fig_Sup_Hopfield_LIF.m                  # LIF validation model
 │
 ├── data/                         # Output data and intermediate results
 └── README.md
@@ -59,7 +56,7 @@ where Ψ (`TimeINsideAdhesiveZone`) controls the build-up of binding probability
 
 | File | Purpose |
 |------|---------|
-| `Fig4SAN2000Psi01A01.m` | Main script: generates neuropil geometry, releases glutamate, simulates diffusion with astroglial binding, writes positional snapshots and diffusion statistics. |
+| `Fig_SAN2000Psi01A01.m` | Main script: generates neuropil geometry, releases glutamate, simulates diffusion with astroglial binding, writes positional snapshots and diffusion statistics. |
 | `InputParametersSR.m` | Reads key–value pairs from `statisticSR.txt` and returns structured parameter sets (geometry, diffusion constants, binding kinetics). |
 | `NMDA_SpaceSR_New.m` | Post-processing script: converts radial glutamate distributions into spatiotemporal concentration maps and computes NMDA receptor open-state occupancy via ODE integration. |
 | `statisticSR.txt` | Configuration file for particle count, astrocyte fraction, binding parameters, and sphere packing density. |
@@ -79,7 +76,7 @@ where Ψ (`TimeINsideAdhesiveZone`) controls the build-up of binding probability
 
 2. Run the main script in MATLAB:
    ```matlab
-   Fig4SAN2000Psi01A01
+   Fig_SAN2000Psi01A01
    ```
 
 3. Outputs include:
@@ -123,19 +120,19 @@ where *m*(η) is the overlap between the retrieved state and the target pattern 
 
 | File | Figure | Description |
 |------|--------|-------------|
-| `Fig4_Hopfield_LIF_Sparse.m` | **Figure 4** (main text) | Sparse spiking Hopfield network with LIF neurons, local connectivity, and biophysical spillover mixing. Reports recall quality vs. noise for varying *M* and σ. |
-| `Fig_Sup_Hopfield_GeneralizedNetwork.m` | **Supplementary Figure** | Generalised (non-spiking) Hopfield network with signed spillover convolution. Demonstrates equivalence of attractor retrieval dynamics across model formulations. |
-| `Fig_Sup_Hopfield_LIF.m` | Supplementary validation | Updated LIF implementation confirming reproducibility. Includes noise robustness analysis (AUC, critical noise η_c). |
+| `Fig_Hopfield_LIF_Sparse.m` | *Memory recall in a sparse LIF network.* Panel shows recall quality (%) vs. noise level (%) for given *M* and σ. | Sparse spiking Hopfield network with LIF neurons, local connectivity, and biophysical spillover mixing. Reports recall quality vs. noise for varying *M* and σ. |
+| `Fig_Sup_Hopfield_GeneralizedNetwork.m` | *Recall stability in the generalised Hopfield network.* Panels show retrieval quality *Q*, overlap *m*, and precision vs. noise η for multiple σ values. | Generalised (non-spiking) Hopfield network with signed spillover convolution. Demonstrates equivalence of attractor retrieval dynamics across model formulations. |
+| `Fig_Sup_Hopfield_LIF.m` | *Noise-dependent retrieval quality in the LIF Hopfield network.* Panel shows *Q*(η) curves for different σ, with AUC and critical noise analysis. | Updated LIF implementation confirming reproducibility. Includes noise robustness analysis (AUC, critical noise η_c). |
 
 ### Running the Network Simulations
 
-**Figure 4** (LIF spiking network):
+**LIF spiking network** (`Fig_Hopfield_LIF_Sparse.m`):
 ```matlab
-Fig4_Hopfield_LIF_Sparse
+Fig_Hopfield_LIF_Sparse
 ```
 Outputs a CSV file (`M=*.csv`) and an errorbar plot of recall quality vs. noise.
 
-**Supplementary Figure** (generalised network):
+**Generalised Hopfield network** (`Fig_Sup_Hopfield_GeneralizedNetwork.m`):
 ```matlab
 params = struct();
 params.visualize_patterns = true;
@@ -143,15 +140,15 @@ params.save_data_csv = true;
 results = run_spiking_hopfield_v2(params);
 ```
 
-**Supplementary LIF validation**:
+**LIF validation model** (`Fig_Sup_Hopfield_LIF.m`):
 ```matlab
 results = run_spiking_hopfield_LIF_v3();
 ```
 
 ### Key Network Parameters
 
-| Parameter | Fig4 (LIF) | Suppl. (Generalised) | Description |
-|-----------|------------|----------------------|-------------|
+| Parameter | LIF Sparse | Generalised | Description |
+|-----------|------------|-------------|-------------|
 | *N* | 400 | 400 | Number of neurons |
 | *P* | 3 | 3 | Number of stored patterns |
 | *M* | 10 | 200 | Spillover range (connections) |
@@ -184,7 +181,7 @@ The diffusion simulation writes timestamped text files for molecular positions, 
 
 If you use this code, please cite the accompanying manuscript:
 
-> Savtchenko L, Rusakov D. *[Manuscript title]*. *Nature Neuroscience* (2026). [DOI pending]
+> Savtchenko L, Rusakov D. *[Manuscript title]*. [Journal and DOI to be added upon publication]
 
 ---
 
@@ -198,4 +195,4 @@ This code is provided for research reproducibility. Please contact the authors b
 
 Prof Dmitri Rusakov — University College London  
 Dr Leonid Savtchenko — University College London  
-Institute of Neurology, UCL
+Computational Neuroscience Group, UCL
