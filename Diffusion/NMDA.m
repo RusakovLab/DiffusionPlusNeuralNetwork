@@ -10,8 +10,8 @@ function dy = NMDA(t,y,f,ft, TimeControl)
 	Ru	= 47.5*10^-3;  %(/ms)	: unbinding      (9.5e-3  x5)
 	Ro	= 80*10^-3;    %(/ms)	: opening        (16e-3   x5) -> open state
 	Rc	= 65*10^-3;    %(/ms)	: closing        (13e-3   x5)
-	Rd	= 125*10^-3;   %(/ms)	: desensitization(25e-3   x5)
-	Rr	= 295*10^-3;   %(/ms)	: resensitization(59e-3   x5)
+	Rd	= 12.5*10^-3;   %(/ms)	: desensitization(25e-3   x5)
+	Rr	= 29.5*10^-3;   %(/ms)	: resensitization(59e-3   x5)
  
     rb1 = Rb * (1e3) * f;
 dy = zeros(5,1);    % a column vector
