@@ -1,4 +1,4 @@
-function dy = NMDA_new(t,y,f,ft, TimeControl)
+function dy = NMDA(t,y,f,ft, TimeControl)
    f = interp1(ft, f, t); % Interpolate the data set (ft, f) at times t
  
 % if (t < 0.1*TimeControl) || (t > 0.102*TimeControl)
