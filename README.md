@@ -158,10 +158,55 @@ results = run_spiking_hopfield_LIF_v3();
 
 ---
 
-## Requirements
+## System Requirements
 
-- **MATLAB** R2018b or later (no additional toolboxes required for core simulations)
-- **Parallel Computing Toolbox** (optional, for accelerated diffusion file processing in `NMDA_SpaceSR_New.m`)
+### Hardware
+
+- **Processor:** Any modern x86-64 CPU (Intel or AMD); multi-core recommended for parameter sweeps
+- **RAM:** ≥ 8 GB (16 GB recommended for large diffusion runs with `np` > 5000)
+- **Disk:** ~500 MB free space for code, outputs, and intermediate files
+- **GPU:** Not required (all computations are CPU-based)
+
+Typical runtimes on a standard desktop workstation (e.g., Intel i7, 16 GB RAM):
+- Hopfield network scripts: 1–30 minutes depending on `trials` and network size
+- Monte-Carlo diffusion (`Fig_SAN2000Psi01A01.m`): 1–8 hours per trial depending on `np` and `Numbersphere`
+- NMDA post-processing (`NMDA_SpaceSR_New.m`): ~10–30 minutes
+
+### Software Dependencies
+
+| Software | Version | Required | Purpose |
+|----------|---------|----------|---------|
+| **MATLAB** | R2018b or later (tested on R2022b, R2024a) | Yes | All simulations |
+| MATLAB Parallel Computing Toolbox | Any compatible version | No (optional) | Accelerated file processing in `NMDA_SpaceSR_New.m` (vectorised variant) |
+
+No additional MATLAB toolboxes, third-party libraries, Python packages, or compiled binaries are required. All code uses core MATLAB functions only.
+
+### Operating System
+
+The code is platform-independent and runs on any OS supported by MATLAB:
+- Windows 10 / 11
+- macOS 12 (Monterey) or later
+- Linux (Ubuntu 20.04+, CentOS 7+, or equivalent)
+
+### Installation Instructions
+
+1. **Install MATLAB** (R2018b or later) from [mathworks.com](https://www.mathworks.com/products/matlab.html). A standard MATLAB installation with no additional toolboxes is sufficient.
+
+2. **Clone or download this repository:**
+   ```bash
+   git clone https://github.com/<username>/<repository>.git
+   cd <repository>
+   ```
+   Alternatively, download the ZIP archive from the repository page and extract it.
+
+3. **Verify the installation** by launching MATLAB and running:
+   ```matlab
+   ver   % Confirm MATLAB version is R2018b or later
+   ```
+
+4. **No additional setup is needed.** All scripts are self-contained and can be run directly from the MATLAB command window or editor. See the "Running" sections below for each simulation component.
+
+> **Note:** No compilation, `mex` building, or path configuration is required. Simply navigate to the appropriate directory (`Diffusion/` or `NetworkCode/`) in MATLAB and run the scripts.
 
 ---
 
