@@ -28,7 +28,9 @@ All simulations are implemented in MATLAB (R2018b or later).
 ├── NetworkCode/                  # Hopfield attractor network models
 │   ├── Fig_Hopfield_LIF_Sparse.m              # LIF spiking Hopfield network
 │   ├── Fig_Sup_Hopfield_GeneralizedNetwork.m   # Generalised Hopfield network
-│   └── Fig_Sup_Hopfield_LIF.m                  # LIF validation model
+│   ├── Fig_Sup_Hopfield_LIF.m                  # LIF validation model
+│   ├── Fig_FG_Hopfield_H_V.m                   # Paper panels F & G (binary Hopfield + spillover kernel)
+│   └── Fighopfieldlifspillover.m               # Spiking LIF Hopfield with biophysical spillover reformulation
 │
 ├── data/                         # Output data and intermediate results
 └── README.md
@@ -123,6 +125,8 @@ where *m*(η) is the overlap between the retrieved state and the target pattern 
 | `Fig_Hopfield_LIF_Sparse.m` | *Memory recall in a sparse LIF network.* Panel shows recall quality (%) vs. noise level (%) for given *M* and σ. | Sparse spiking Hopfield network with LIF neurons, local connectivity, and biophysical spillover mixing. Reports recall quality vs. noise for varying *M* and σ. |
 | `Fig_Sup_Hopfield_GeneralizedNetwork.m` | *Recall stability in the generalised Hopfield network.* Panels show retrieval quality *Q*, overlap *m*, and precision vs. noise η for multiple σ values. | Generalised (non-spiking) Hopfield network with signed spillover convolution. Demonstrates equivalence of attractor retrieval dynamics across model formulations. |
 | `Fig_Sup_Hopfield_LIF.m` | *Noise-dependent retrieval quality in the LIF Hopfield network.* Panel shows *Q*(η) curves for different σ, with AUC and critical noise analysis. | Updated LIF implementation confirming reproducibility. Includes noise robustness analysis (AUC, critical noise η_c). |
+| `Fig_FG_Hopfield_H_V.m` | *Paper panels F and G.* Panel F: noise-free recall (stored pattern → probe → recalled). Panel G: 2×3 grid of recalled patterns at two noise levels (20%, 30%) × three spillover widths (σ = 0, 5, 10). | Self-contained binary (±1) Hopfield network with a 1D Gaussian spillover kernel applied via circular shift. Spillover amplitude is auto-calibrated to the Hebbian drive. Convergence detected by a sliding window; display trial selected by an isotropy filter that excludes spurious striped attractors. Exports `Panel_F.png` and `Panel_G.png`. |
+| `Fighopfieldlifspillover.m` | *Quality of recall vs. noise for multiple spillover coefficients M.* Full sweep of noise levels (0–100%, 10% steps) × M values [1, 10, 25, 50, 100, 200] × 100 trials, plus paper panels at 0% and 20% noise. | Biophysical reformulation of the spiking LIF Hopfield network. M is reinterpreted as a **neurotransmitter spillover coefficient**: two fixed synaptic matrices coexist — a sparse wired Hebbian core (`W_core`, fan-in = 3 nearest neighbours) and a spatially gated full Hebbian spillover matrix (`W_spill`, Gaussian footprint of width σ = 5). Retrieval drive is `W_eff = (1 − α_M)·W_core + α_M·W_spill` where `α_M = α_max·(1 − exp(−M/M_tau))`. Pattern activity is decoded from the mean firing rate in the final 5-second window. |
 
 ### Running the Network Simulations
 
@@ -145,16 +149,29 @@ results = run_spiking_hopfield_v2(params);
 results = run_spiking_hopfield_LIF_v3();
 ```
 
+**Paper panels F & G — binary Hopfield with spillover kernel** (`Fig_FG_Hopfield_H_V.m`):
+```matlab
+Fig_FG_Hopfield_H_V
+```
+Saves `Panel_F.png` and `Panel_G.png` to the working directory and prints Q mean ± s.d. to the console.
+
+**Spiking LIF with biophysical spillover sweep** (`Fighopfieldlifspillover.m`):
+```matlab
+run Fighopfieldlifspillover
+```
+Runs automatically on execution. Set `GENERATE_PAPER_FIGURES = true` (default) to produce the 0% and 20% noise paper panels in addition to the full Q-vs-noise errorbar plot for all M values.
+
 ### Key Network Parameters
 
-| Parameter | LIF Sparse | Generalised | Description |
-|-----------|------------|-------------|-------------|
-| *N* | 400 | 400 | Number of neurons |
-| *P* | 3 | 3 | Number of stored patterns |
-| *M* | 10 | 200 | Spillover range (connections) |
-| σ | 5 | 0, 2, 5, 10 | Spatial width of spillover kernel |
-| η | 0–1 | 0–1 | Noise level (fraction of flipped bits) |
-| Trials | 5 | 100 | Repetitions per condition |
+| Parameter | LIF Sparse | Generalised | Panels F & G | LIF Spillover Sweep | Description |
+|-----------|------------|-------------|--------------|---------------------|-------------|
+| *N* | 400 | 400 | 400 | 400 | Number of neurons |
+| *P* | 3 | 3 | 3 | 3 | Number of stored patterns |
+| *M* | 10 | 200 | 200 (fixed) | 1–200 (swept) | Spillover range / coefficient |
+| σ | 5 | 0, 2, 5, 10 | 0, 5, 10 | 5 (fixed) | Spatial width of spillover kernel |
+| η | 0–1 | 0–1 | 0, 0.2, 0.3 | 0–1 | Noise level (fraction of flipped bits) |
+| Trials | 5 | 100 | 50 | 100 | Repetitions per condition |
+| Neuron model | LIF spiking | Binary ±1 | Binary ±1 | LIF spiking | Update rule |
 
 ---
 
